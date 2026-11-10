@@ -1,0 +1,67 @@
+# =========================================================================
+# Nginx-Proxy-Manager Docker Compose Configuration
+# =========================================================================
+
+
+services:
+
+  # --- Nginx-Proxy-Manager ---
+
+  npm:
+    image: 'jc21/nginx-proxy-manager:2.16.0'
+    container_name: npm
+    restart: unless-stopped
+    ports:
+      - '80:80'               # Public HTTP Port
+      - '443:443'             # Public HTTPS Port
+      - '81:81'               # Admin Web Port
+      # Add any other Stream port you want to expose
+      # - '21:21' # FTP
+    environment:
+      TZ: "Europe/Berlin"
+      # Postgres parameters:
+      DB_POSTGRES_HOST: "postgres"
+      DB_POSTGRES_PORT: 5432
+      DB_POSTGRES_USER: "${DB_USER}"
+      DB_POSTGRES_PASSWORD: "${DB_PASSWORD}"
+      DB_POSTGRES_NAME: "${DB_NAME}"
+      # Uncomment this if IPv6 is not enabled on your host
+      # DISABLE_IPV6: 'true'
+    volumes:
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
+    networks:
+      - npm-internal
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "/usr/bin/check-health"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 15s
+
+  # --- PostgreSQL ---
+
+  postgres:
+    image: postgres:17
+    container_name: npm-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: "${DB_NAME}"
+      POSTGRES_USER: "${DB_USER}"
+      POSTGRES_PASSWORD: "${DB_PASSWORD}"
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+    networks:
+      - npm-internal
+    healthcheck:
+      test: ["CMD", "pg_isready"]
+      interval: 3s
+      timeout: 5s
+      retries: 7
+
+networks:
+  npm-internal:
+    driver: bridge

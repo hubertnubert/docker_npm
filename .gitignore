@@ -1,0 +1,14 @@
+# Private Umgebungsvariablen (enthält Passwörter!)
+.env
+.env.local
+
+# Lokale Datenverzeichnisse (Datenbank & Zertifikate)
+*.db
+*.log
+data/
+letsencrypt/
+postgres_data/
+
+# Betriebssystem-spezifische Dateien
+.DS_Store
+Thumbs.db

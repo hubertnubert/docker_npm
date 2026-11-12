@@ -1,5 +1,7 @@
 # Nginx Proxy Manager (Docker Compose Setup)
 
+Project-Link: https://github.com/NginxProxyManager/nginx-proxy-manager
+
 A production-ready Docker Compose configuration for **Nginx Proxy Manager (NPM)** using a **PostgreSQL 17** database backend. This repository is structured to be instantly ready for deployment after cloning.
 
 ## 📋 Prerequisites
@@ -42,11 +44,7 @@ Once the containers are up and running, you can access the admin interface via y
 
 * **URL:** `http://<YOUR-SERVER-IP>:81`
 
-### Default Credentials for First-Time Login:
-* **Email:** `admin@example.com`
-* **Password:** `changeme`
-
-*⚠️ **Important:** You will be prompted to change your email address and the default password immediately after your first login. Please update these configuration details straight away.*
+*⚠️ **Important:** You will be prompted to change your email address and the default password immediately on your first login. Please update these configuration details straight away.*
 
 ---
 

@@ -1,14 +1,59 @@
-# Private Umgebungsvariablen (enthält Passwörter!)
+# =========================================================================
+# ENVIRONMENT & SECRETS
+# =========================================================================
+# Ignore the real environment file containing production passwords
 .env
 .env.local
+.env.*.local
 
-# Lokale Datenverzeichnisse (Datenbank & Zertifikate)
+# Keep the template file in the repository so users can copy it
+!.env.example
+
+# =========================================================================
+# PERSISTENT CONTAINER DATA (Databases & Cache)
+# =========================================================================
+# Ignore auto-generated persistent volume directories
+
+
+# Ignore database files and SQL dumps anywhere in the project
+*.sqlite
+*.sqlite3
 *.db
+*.sql
+*.sql.gz
+
+# =========================================================================
+# APPLICATION CODE (app1 & app2)
+# =========================================================================
+# Ignore all user application files inside app1 and app2...
+data/*
+letsencrypt/*
+postgres_data/*
+
+# ...except for the placeholder files and demo test scripts!
+!data/.gitkeep
+!letsencrypt/.gitkeep
+!postgres_data/.gitkeep
+
+# =========================================================================
+# LOGS & TEMPORARY FILES
+# =========================================================================
 *.log
-data/
-letsencrypt/
-postgres_data/
+logs/
+tmp/
+temp
 
 # Betriebssystem-spezifische Dateien
 .DS_Store
 Thumbs.db
+
+# =========================================================================
+# IDE & OPERATING SYSTEM FILES
+# =========================================================================
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
